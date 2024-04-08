@@ -1,0 +1,72 @@
+version: "3.1"
+
+stories:
+
+- story: story give name
+  steps:
+  - intent: greet
+  - action: name_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_greet_with_name
+
+- story: story give name 2
+  steps:
+  - intent: give_name
+  - action: utter_greet_with_name
+
+- story: ask name
+  steps:
+  - intent: ask_name
+  - action: utter_ask_name
+
+- story: bot challenge
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- story: ask function
+  steps:
+  - intent: ask_func_list
+  - action: utter_func_list
+
+- story: bye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: thank
+  steps:
+  - intent: thank
+  - action: utter_thank
+
+- story: story deny
+  steps:
+  - intent: deny
+  - action: utter_sorry
+
+- story: story how to buy item
+  steps:
+  - intent: ask_how_to_buy_item
+  - action: utter_instruction_buy_item
+
+- story: story ask buy item
+  steps:
+  - intent: ask_buy_item
+  - action: size_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_check_size
+
+- story: change size
+  steps:
+  - intent: ask_size
+  - action: action_reset_cust_height
+  - action: action_reset_cust_weight
+  - action: size_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_check_size

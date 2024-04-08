@@ -1,0 +1,148 @@
+version: "3.1"
+
+intents:
+  - give_name
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - thank
+  - ask_func_list
+  - ask_name
+  - ask_size
+  - ask_how_to_buy_item
+  - ask_buy_item
+
+entities:
+ - cust_sex
+ - cust_name
+ - cust_weight
+ - cust_height
+ - type_shirt
+ - type_pant
+ - item_type
+ - type_shirt
+
+slots:
+  type_shirt:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: type_shirt
+  item_type:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: item_type
+  cust_name:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: cust_name
+  cust_weight:
+    type: any
+    mappings:
+      - type: from_entity
+        entity: cust_weight
+  cust_height:
+    type: any
+    mappings:
+      - type: from_entity
+        entity: cust_height
+  shirt_size:
+    type: any
+    mappings:
+      - type: custom
+        action: action_check_size
+
+forms:
+  size_form:
+    required_slots:
+        - item_type
+        - cust_height
+        - cust_weight
+  name_form:
+    required_slots:
+        - cust_name
+
+responses:
+  utter_ask_cust_name:
+  - text: "Kính chào Quý khách! Quý khách vui lòng cho biết tên để tiện xưng hô được không ah?"
+
+  utter_greet_with_name:
+  - text: "Xin chào bạn {cust_name}. Tôi có thể giúp gì được cho bạn {cust_name} ạ?"
+
+  utter_did_that_help:
+  - text: "Điều này có giúp ích cho bạn không?"
+
+  utter_happy:
+  - text: "Thật tuyệt vời!"
+
+  utter_cheer_up:
+  - text: "Hãy vui lên khi có tôi bên cạnh."
+
+  utter_goodbye:
+  - text: "Kính chào tạm biệt và mong sớm gặp lại quý khách!"
+  - text: "Kính chào tạm biệt và chúc quý khách một ngày tốt lành!"
+
+  utter_iamabot:
+  - text: "Tất nhiên tôi là người máy được thiết lập bởi học trò thầy Vinh rồi."
+
+  utter_thank:
+    - text: "Cảm ơn quý khách quá khen ạ!"
+    - text: "Dạ không có gì, đó là trách nhiệm của em mà!"
+
+  utter_func_list:
+    - text: "Em có thể làm được rất nhiều thứ: hát, đọc thơ, đọc chuyện...nhưng giờ em chỉ chat thôi!"
+
+  utter_ask_name:
+    - text: "Em tên Bot Sóc Xinh. Người ta hay gọi em là Bot thông minh xinh đẹp giỏi giang nhất vũ trụ ạ! Quý khách cần trợ giúp gì ạ?"
+    - text: "Dạ em tên Sóc nhưng em thích gọi em là Bot Sóc Xinh cho nó hay ạ."
+
+  utter_unclear:
+    - text: "Thưa quý khách, hiện tại tôi chưa hiểu được yêu cầu của Quý khách."
+
+  utter_ask_size:
+    - text: "Bạn cho tôi xin chiều cao và cân nặng được không ạ?"
+
+  utter_ask_item_type:
+    - text: "Bạn muốn mua loại hàng nào: áo, quần, giày, dép, mũ,...?"
+
+  utter_ask_cust_height:
+    - text: "Bạn cho tôi xin chiều cao được không ạ?"
+
+  utter_ask_cust_weight:
+    - text: "Bạn cho tôi xin cân nặng được không ạ?"
+
+  utter_size_shirt:
+    - text: "Bạn cao {cust_height} và nặng {cust_weight} thì nên mặc áo size {shirt_size}"
+  
+  utter_size_pant:
+    - text: "Bạn cao {cust_height} và nặng {cust_weight} thì nên mặc quần size {shirt_size}"
+
+  utter_sorry:
+    - text: "Xin lỗi nhưng tôi đã được dạy như vậy."
+
+  utter_instruction_buy_item:
+    - text: "Đầu tiên bạn phải đăng ký tài khoản, cập nhật đầy đủ thông tin như địa chỉ, số điện thoại. Sau đó bạn đăng nhập và chọn sản phẩm muốn mua, sau đó vào giỏ hàng và tiến hành thanh toán"
+
+  utter_default:
+    - text: Xin lỗi tôi không thể giúp ban.
+
+  utter_please_rephrase:
+    - text: Xin lỗi nhưng tôi không hiểu ý bạn.
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+actions:
+- action_check_size
+- action_reset_cust_height
+- action_reset_cust_weight
+- validate_size_form
+- action_default_fallback
+- validate_name_form

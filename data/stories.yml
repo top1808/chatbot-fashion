@@ -51,9 +51,9 @@ stories:
   - intent: ask_how_to_buy_item
   - action: utter_instruction_buy_item
 
-- story: story ask buy item
+- story: story ask buy item with size
   steps:
-  - intent: ask_buy_item
+  - intent: ask_buy_item_with_size
   - action: size_form
   - active_loop: null
   - slot_was_set:
@@ -62,7 +62,7 @@ stories:
 
 - story: change size
   steps:
-  - intent: ask_size
+  - intent: change_size
   - action: action_reset_cust_height
   - action: action_reset_cust_weight
   - action: size_form
@@ -70,3 +70,27 @@ stories:
   - slot_was_set:
     - requested_slot: null
   - action: action_check_size
+
+- story: story ask buy item without size
+  steps:
+  - intent: ask_buy_item_without_size
+  - action: action_get_product_by_type
+
+- story: story ask buy shoes
+  steps:
+  - intent: ask_buy_shoes
+  - action: shoes_size_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_check_shoes_size
+
+- story: story ask product
+  steps:
+  - intent: ask_product
+  - action: action_get_products
+
+- story: story ask category
+  steps:
+  - intent: ask_category
+  - action: action_get_categories

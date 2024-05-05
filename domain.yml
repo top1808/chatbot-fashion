@@ -13,25 +13,30 @@ intents:
   - ask_func_list
   - ask_name
   - ask_size
+  - change_size
   - ask_how_to_buy_item
-  - ask_buy_item
+  - ask_buy_item_with_size
+  - ask_buy_item_without_size
+  - ask_buy_shoes
+  - ask_product
+  - ask_category
 
 entities:
  - cust_sex
  - cust_name
  - cust_weight
  - cust_height
- - type_shirt
+ - buy_for
  - type_pant
  - item_type
- - type_shirt
+ - foot_size
 
 slots:
-  type_shirt:
+  buy_for:
     type: text
     mappings:
       - type: from_entity
-        entity: type_shirt
+        entity: buy_for
   item_type:
     type: text
     mappings:
@@ -57,6 +62,11 @@ slots:
     mappings:
       - type: custom
         action: action_check_size
+  foot_size:
+    type: any
+    mappings:
+      - type: from_entity
+        entity: foot_size
 
 forms:
   size_form:
@@ -67,6 +77,9 @@ forms:
   name_form:
     required_slots:
         - cust_name
+  shoes_size_form:
+    required_slots:
+        - foot_size
 
 responses:
   utter_ask_cust_name:
@@ -89,14 +102,14 @@ responses:
   - text: "Kính chào tạm biệt và chúc quý khách một ngày tốt lành!"
 
   utter_iamabot:
-  - text: "Tất nhiên tôi là người máy được thiết lập bởi học trò thầy Vinh rồi."
+  - text: "Tất nhiên tôi là người máy rồi."
 
   utter_thank:
     - text: "Cảm ơn quý khách quá khen ạ!"
     - text: "Dạ không có gì, đó là trách nhiệm của em mà!"
 
   utter_func_list:
-    - text: "Em có thể làm được rất nhiều thứ: hát, đọc thơ, đọc chuyện...nhưng giờ em chỉ chat thôi!"
+    - text: "Em là 1 con bot dùng để tư vấn và chăm sóc khách hàng về mặt thời trang của shop T&T ạ."
 
   utter_ask_name:
     - text: "Em tên Bot Sóc Xinh. Người ta hay gọi em là Bot thông minh xinh đẹp giỏi giang nhất vũ trụ ạ! Quý khách cần trợ giúp gì ạ?"
@@ -110,6 +123,10 @@ responses:
 
   utter_ask_item_type:
     - text: "Bạn muốn mua loại hàng nào: áo, quần, giày, dép, mũ,...?"
+
+  utter_ask_foot_size:
+    - text: "Bạn cho tôi xin kích thước chân được không ạ?"
+    - text: "Cho tôi hỏi chân bạn dài bao nhiêu cm nhỉ?"
 
   utter_ask_cust_height:
     - text: "Bạn cho tôi xin chiều cao được không ạ?"
@@ -146,3 +163,8 @@ actions:
 - validate_size_form
 - action_default_fallback
 - validate_name_form
+- action_get_products
+- action_get_categories
+- validate_shoes_size_form
+- action_check_shoes_size
+- action_get_product_by_type

@@ -8,12 +8,14 @@ assistant_id: 20240316-221816-asymptotic-image
 
 # Configuration for Rasa NLU.
 # https://rasa.com/docs/rasa/nlu/components/
-language: en
+language: vi
 
 pipeline:
 # # No configuration for the NLU pipeline was provided. The following default pipeline was used to train your model.
 # # If you'd like to customize it, uncomment and adjust the pipeline.
 # # See https://rasa.com/docs/rasa/tuning-your-model for more information.
+  # - name: custom_tokenizers.vi_tokenizer.VietnameseTokenizer
+  #   tokenizer: underthesea
   - name: WhitespaceTokenizer
   - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
@@ -47,3 +49,5 @@ policies:
   - name: TEDPolicy
     max_history: 5
     epochs: 100
+    constrain_similarities: true
+    model_confidence: softmax

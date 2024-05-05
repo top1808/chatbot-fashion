@@ -2,37 +2,109 @@ version: "3.1"
 
 nlu:
 
+- intent: ask_product
+  examples: |
+    - Shop bán những sản phẩm gì?
+    - Shop ban san pham gi?
+    - Ở đây bán những sản phẩm gì?
+    - Ở đây bán những gì?
+    - Shop có những sản phẩm gì vậy?
+
+- intent: ask_category
+  examples: |
+    - Shop bán những mặt hàng gì?
+    - Shop ban nhung mat hang nao?
+    - Shop bán loại hàng nào?
+    - Shop bán loai hang gi?
+    - Ở đây bán những loại hàng nào?
+
 - intent: ask_size
   examples: |
-    - tôi cao [1m7](cust_height) và nặng [49kg](cust_weight) thì mặc [áo](item_type) size gì?
+    - tôi cao [1m7](cust_height) và nặng [50kg](cust_weight) thì mặc [áo](item_type) size gì?
     - tôi cao [1m32](cust_height) thì mặc [áo](item_type) size gì?
     - tôi cao [1m8](cust_height) thì mặc [áo](item_type) size gì?
     - tôi cao [1m6](cust_height) thì mặc [quần](item_type) size gì?
     - tôi cao [1m4](cust_height) thì mặc [áo](item_type) size gì?
-    - tôi cao [170cm](cust_height) thì mặc [quần](item_type) size gì?
-    - tôi cao [180cm](cust_height) thì mặc [áo](item_type) size gì?
-    - tôi cao [160cm](cust_height) thì mặc [áo](item_type) size gì?
-    - tôi cao [150cm](cust_height) thì mặc [quần](item_type) size gì?
+    - tôi cao [175cm](cust_height) thì mặc [quần](item_type) size gì?
+    - tôi cao [181cm](cust_height) thì mặc [áo](item_type) size gì?
+    - tôi cao [162cm](cust_height) thì mặc [áo](item_type) size gì?
+    - tôi cao [153cm](cust_height) thì mặc [quần](item_type) size gì?
     - tôi cao [140cm](cust_height) thì mặc [áo](item_type) size gì?
-    - tôi cao [1m5](cust_height) và nặng [56kg](cust_weight) thì mặc [quần](item_type) size gì?
-    - tôi nặng [32kg](cust_weight)
+    - tôi cao [1m5](cust_height) và nặng [37kg](cust_weight) thì mặc [quần](item_type) size gì?
+    - tôi cao [1m2](cust_height) và nặng [28kg](cust_weight) thì mặc [giày](item_type) size gì?
+    - tôi cao [1m0](cust_height) và nặng [9kg](cust_weight) thì mặc [áo khoác](item_type) size gì?
+    - tôi cao [1m10](cust_height) và nặng [16kg](cust_weight) thì mặc [quần đùi](item_type) size gì?
+    - tôi nặng [42kg](cust_weight)
+
+- intent: change_size
+  examples: |
     - tôi muốn thay đổi chiều cao
     - tôi muốn thay đổi cân nặng
     - tôi muốn thay đổi chiều cao và cân nặng
 
+- intent: ask_shoes_size
+  examples: |
+    - Chân tôi dài [17 cm](foot_size) thì mặc dép số bao nhiêu nào?
+    - Chân tôi dài [8cm](foot_size) thì mặc guốc size nào?
+    - Chân tôi dài [24 centimet](foot_size) thì mặc giày số mấy?
+    - Chân tôi dài [36 xăng ti mét](foot_size) thì mặc số bao nhiêu nào?
+    - Chân tôi dài [1 m](foot_size) thì mặc dép size nào?
+    - Chân tôi dài [1 mét](foot_size) thì đi giày size nào?
+    - Chân tôi to khoảng [2m2](foot_size) thì mặc size nào?
+    - Chân tôi dài [32m2](foot_size) thì đi được số nào?
+    - Chân tôi dài khoảng [20 phân](foot_size) thì thích hợp dép size nào?
+    - Chân tôi dài khoảng [150mm](foot_size) thì thích hợp giày size nào?
+
 - intent: give_name
   examples: |
     - Tôi là [Vinh](cust_name)
-    - Tôi là [Thắng](cust_name)
-    - Tôi là [Trân](cust_name)
-    - Anh tên [A](cust_name)
-    - Mình là [B](cust_name)
-    - Mình tên [C](cust_name)
-    - Mình tên là [D](cust_name)
-    - Tôi tên là [Vinh](cust_name)
-    - Tôi tên [Vinh](cust_name)
-    - [Vinh](cust_name)
-    - Tôi là [](cust_name)
+    - Anh là [Thắng](cust_name)
+    - Tớ là [Trân](cust_name)
+    - Anh tên [an](cust_name)
+    - Chị là [bảo](cust_name)
+    - Cô tên [chi](cust_name)
+    - Mình tên là [dục](cust_name)
+    - Em tên là [Hùng](cust_name)
+    - Bác tên [Thư](cust_name)
+    - [sơn](cust_name)
+    - tên là [quang](cust_name)
+    - anh ten la [phát](cust_name)
+    - Chú ten là [ly](cust_name)
+    - Co tên là [nga](cust_name)
+    - Chi tên là [học](cust_name)
+    - Toi tên la [Lân](cust_name)
+    - minh ten la [Nhân](cust_name)
+    - bac tên là [Ngân](cust_name)
+    - to tên là [quân](cust_name)
+    - tui tên là [thế](cust_name)
+    - t ten la [việt](cust_name)
+    - Chú tên là [thuận](cust_name)
+    - Chú tên là [kh](cust_name)
+    - Chú tên là [f](cust_name)
+    - Chú tên là [u](cust_name)
+    - Chú tên là [v](cust_name)
+    - Chú tên là [t](cust_name)
+    - Chú tên là [s](cust_name)
+    - Chú tên là [r](cust_name)
+    - Chú tên là [q](cust_name)
+    - Chú tên là [p](cust_name)
+    - Chú tên là [ơ](cust_name)
+    - Chú tên là [ô](cust_name)
+    - Chú tên là [o](cust_name)
+    - Chú tên là [n](cust_name)
+    - Chú tên là [m](cust_name)
+    - Chú tên là [l](cust_name)
+    - Chú tên là [k](cust_name)
+    - Chú tên là [h](cust_name)
+    - Chú tên là [gi](cust_name)
+    - Chú tên là [ê](cust_name)
+    - Chú tên là [e](cust_name)
+    - Chú tên là [đ](cust_name)
+    - Chú tên là [d](cust_name)
+    - Chú tên là [c](cust_name)
+    - Chú tên là [b](cust_name)
+    - Chú tên là [a](cust_name)
+    - Chú tên là [â](cust_name)
 
 - intent: greet
   examples: |
@@ -170,13 +242,36 @@ nlu:
   examples: |
     - Tôi muốn mua áo quần tại shop thì làm như thế nào?
 
-- intent: ask_buy_item
+- intent: ask_buy_item_with_size
   examples: |
-    - Tôi muốn mua [áo](item_type) [khoác](type_shirt)?
-    - Tôi muốn mua [mũ](item_type) để [đi dự sinh nhật](type_shirt)?
-    - Tôi muốn mua [áo](item_type) để [đón tết](type_shirt)?
-    - Tôi muốn mua [giày](item_type) để [tặng bạn](type_shirt)?
-    - Tôi muốn mua [áo](item_type) [con trai](type_shirt)?
-    - Tôi muốn mua [quần](item_type) [con gái](type_shirt)?
-    - Tôi muốn mua [áo](item_type) [tặng bố](type_shirt)?
-    - Tôi muốn mua [trang sức](item_type) [tặng mẹ](type_shirt)?
+    - Tôi muốn mua [áo khoác](item_type)?
+    - Tôi muốn mua [áo ba lỗ](item_type) để [đón tết](buy_for)?
+    - Tôi muốn mua [áo sweater](item_type) [con trai](buy_for)?
+    - Tôi muốn mua [sơ mi](item_type) [đàn ông](buy_for)?
+    - Tôi muốn mua [áo hoodie](item_type) tặng [bố](buy_for)?
+    - Tôi muốn mua [quần rin](item_type) [con gái](buy_for)?
+    - Tôi muốn mua [quần kaki](item_type) [nam](buy_for)?
+    - Tôi muốn mua [quần bò](item_type) [con gái](buy_for)?
+    - Tôi muốn mua [quần jogger](item_type) [con gái](buy_for)?
+    - Tôi muốn mua [quần tây](item_type) [nu](buy_for)?
+    - Tôi muốn mua [quần đùi](item_type) [nữ](buy_for)?
+    - Tôi muốn mua [váy](item_type) tặng [mẹ](buy_for)?
+    - Tôi muốn mua [áo quần](item_type) cho [con trai](buy_for) của tôi?
+    - Tôi muốn mua [áo quần](item_type) [con gái](buy_for)?
+
+- intent: ask_buy_shoes
+  examples: |
+    - Tôi muốn mua [giày](item_type) để [tặng bạn](buy_for)?
+    - Tôi muốn mua [dép](item_type)?
+
+- intent: ask_buy_item_without_size
+  examples: |
+    - Tôi muốn mua [balo](item_type) [để đi du lịch](buy_for)?
+    - Tôi muốn mua [đồng hồ](item_type) [tặng bố](buy_for)?
+    - Tôi muốn mua [trang sức](item_type) [tặng mẹ](buy_for)?
+    - Tôi muốn mua [mũ](item_type) để [đi dự sinh nhật](buy_for)?
+    - Tôi muốn mua [balo](item_type) [để đi học](buy_for)?
+    - Tôi muốn mua [mũ trẻ em](item_type)?
+    - Tôi muốn mua [quần trẻ sơ sinh](item_type)?
+    - Tôi muốn mua [áo con nít](item_type)?
+    - Tôi muốn mua đồ [dép trẻ em](item_type)?

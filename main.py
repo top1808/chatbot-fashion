@@ -18,7 +18,7 @@ app.config['CORS_HEADERS'] = 'application/json'
 @app.route("/v3/chatbot", methods=["POST"])
 def chat():
     request_data = request.get_json()
-    payload = json.dumps({"sender": "Rasa", "message": request_data["message"]})
+    payload = json.dumps({"sender": request_data["user"], "message": request_data["message"]})
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     response = requests.request("POST", url="http://localhost:5005/webhooks/rest/webhook", headers=headers,
                                 data=payload)
@@ -70,7 +70,6 @@ def addIntents():
 def editIntents(id):
     try:
         request_data = request.get_json()
-        print(request_data)
         collection_name.update_one({'_id': ObjectId(id)}, {"$set": {
             "intent": request_data["intent"],
             "patterns": request_data["patterns"],

@@ -9,7 +9,7 @@ from rasa_sdk import Action, FormValidationAction, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.events import UserUtteranceReverted
 
-from utils.functionHelper import chose_size_from_height, get_all_name_products, get_all_name_categories, chose_shoes_size_from_foot_size, get_products_buy_name
+from utils.functionHelper import chose_size_from_height, get_all_name_products, get_all_name_categories, chose_shoes_size_from_foot_size, get_products_buy_name, get_all_name_discount_programs
 
 
 class ActionGetProducts(Action):
@@ -26,6 +26,14 @@ class ActionGetCategories(Action):
     
     def run(self, dispatcher, tracker, domain):
         dispatcher.utter_message(text=f"Chúng tôi bán những loại hàng như {get_all_name_categories()},... và nhiều loại hàng khác nữa.")
+        return []  
+
+class ActionGetDiscountPrograms(Action):
+    def name(self):
+        return "action_get_discount_programs"
+    
+    def run(self, dispatcher, tracker, domain):
+        dispatcher.utter_message(text=f"Chúng tôi đang có những chương trình khuyến mãi như {get_all_name_discount_programs()}. Bạn có thể tham khảo những sản phẩm giảm giá của những chương trình khuyến mãi này.")
         return []       
 
 class ActionResetCustHeight(Action):
@@ -72,9 +80,14 @@ class ActionCheckSize(Action):
         cust_height = tracker.get_slot("cust_height")
         cust_weight = tracker.get_slot("cust_weight")
         item_type = tracker.get_slot("item_type")
+        print("item_type: ", item_type)
         if cust_height:
             get_size = chose_size_from_height(cust_height)
-            dispatcher.utter_message(text=f"Bạn cao {cust_height} và nặng {cust_weight} thì nên mặc {item_type} size {get_size}.")
+            if get_size:
+                dispatcher.utter_message(text=f"Bạn cao {cust_height} và nặng {cust_weight} thì nên mặc {item_type} size {get_size}.")
+                dispatcher.utter_custom_message({'text': "image", 'class': "image", "url": "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/450071881_1018050573026378_950725759138483731_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeG-1vT2ahSlG0kF5wSTtXHJ9A5e7cgPL_H0Dl7tyA8v8WOPu74XiL_y0OI49ccmHov0lj-IxXL1FbI_5vOllGGW&_nc_ohc=IiDWflOtuSMQ7kNvgHQuALA&_nc_ht=scontent.fsgn2-8.fna&oh=00_AYAtbcsN1STTRRy1tcPXLphE5RlXUJgKiomS15l3nJdlWw&oe=6693509A"})
+            else:
+                dispatcher.utter_message(text=f"Xin lỗi chúng tôi không có size này. Vui lòng liên hệ với chúng tôi để đặt riêng.")
         else:
             dispatcher.utter_message(text=f"Tôi không biết")
         return []

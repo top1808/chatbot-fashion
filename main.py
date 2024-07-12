@@ -6,6 +6,7 @@ from flask_cors import CORS
 import datetime
 
 from db_connect import get_database
+from rasa_api import parseModel, getConversation
 
 dbname = get_database()
 collection_name = dbname["intents"]
@@ -18,11 +19,16 @@ app.config['CORS_HEADERS'] = 'application/json'
 @app.route("/v3/chatbot", methods=["POST"])
 def chat():
     request_data = request.get_json()
+
     payload = json.dumps({"sender": request_data["user"], "message": request_data["message"]})
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     response = requests.request("POST", url="http://localhost:5005/webhooks/rest/webhook", headers=headers,
                                 data=payload)
     response = response.json()
+    if (len(response) == 0):
+        return json.dumps({"data": "Có lỗi xảy ra."})
+    conversation = getConversation(response[0]["recipient_id"])
+    ranking = parseModel(request_data)["intent_ranking"]
     chat_collection = dbname["chats"]
     resp = []
     for i in range(len(response)):
@@ -33,7 +39,9 @@ def chat():
     result = resp
     chat_collection.insert_one({
         "user": request_data["message"],
-        "bot": result[0] if len(result) > 0 else "", 
+        "bot": result[0] if len(result) > 0 else "",
+        "conversation": conversation,
+        "ranking": ranking,
         "date_time": datetime.datetime.now()
     })
     return json.dumps({"data": result})

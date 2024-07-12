@@ -5,3 +5,8 @@ rules:
   steps:
   - intent: nlu_fallback
   - action: utter_please_rephrase
+
+- rule: greet
+  steps:
+  - intent: give_name
+  - action: utter_greet_with_name

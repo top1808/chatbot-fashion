@@ -20,6 +20,8 @@ intents:
   - ask_buy_shoes
   - ask_product
   - ask_category
+  - ask_discount_program
+  - ask_delivery_time
 
 entities:
  - cust_sex
@@ -94,9 +96,6 @@ responses:
   utter_happy:
   - text: "Thật tuyệt vời!"
 
-  utter_cheer_up:
-  - text: "Hãy vui lên khi có tôi bên cạnh."
-
   utter_goodbye:
   - text: "Kính chào tạm biệt và mong sớm gặp lại quý khách!"
   - text: "Kính chào tạm biệt và chúc quý khách một ngày tốt lành!"
@@ -152,6 +151,9 @@ responses:
   utter_please_rephrase:
     - text: Xin lỗi nhưng tôi không hiểu ý bạn.
 
+  utter_ask_delivery_time:
+    - text: Thời gian giao hàng của shop sẽ nằm trong khoảng từ 3-7 ngày. Trong trường hợp đặc biệt thì có thể thời gian sẽ kéo dài thêm vài ngày nữa ạ.
+
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
@@ -168,3 +170,4 @@ actions:
 - validate_shoes_size_form
 - action_check_shoes_size
 - action_get_product_by_type
+- action_get_discount_programs

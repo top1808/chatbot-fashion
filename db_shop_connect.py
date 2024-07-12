@@ -1,4 +1,4 @@
-from bson import ObjectId, json_util
+from bson import json_util
 from pymongo.mongo_client import MongoClient
 
 CONNECTION_STRING = ("mongodb+srv://top1808:vGSlA80YSUPiFgSr@cluster0.7alxuod.mongodb.net/?retryWrites=true&w"
@@ -35,6 +35,15 @@ def get_categories(limit = 5):
     for categories in categories_serializable:
         categories['_id'] = str(categories['_id'])
     return categories_serializable
+
+def get_discount_programs(limit = 5):
+    client = get_database()
+    discount_programs = client["discountprograms"].find().limit(limit)
+    discount_programs_serializable = [json_util.loads(json_util.dumps(discount_programs)) for discount_programs in discount_programs]
+
+    for discount_program in discount_programs_serializable:
+        discount_program['_id'] = str(discount_program['_id'])
+    return discount_programs_serializable
 
 def get_discountPrograms():
     client = get_database()

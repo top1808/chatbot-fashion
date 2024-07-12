@@ -84,17 +84,23 @@ nlu:
     - Chú tên là [u](cust_name)
     - Chú tên là [v](cust_name)
     - Chú tên là [t](cust_name)
+    - Chú tên là [th](cust_name)
+    - Chú tên là [tr](cust_name)
     - Chú tên là [s](cust_name)
     - Chú tên là [r](cust_name)
     - Chú tên là [q](cust_name)
+    - Chú tên là [qu](cust_name)
     - Chú tên là [p](cust_name)
+    - Chú tên là [ph](cust_name)
     - Chú tên là [ơ](cust_name)
     - Chú tên là [ô](cust_name)
     - Chú tên là [o](cust_name)
     - Chú tên là [n](cust_name)
+    - Chú tên là [nh](cust_name)
     - Chú tên là [m](cust_name)
     - Chú tên là [l](cust_name)
     - Chú tên là [k](cust_name)
+    - Chú tên là [kh](cust_name)
     - Chú tên là [h](cust_name)
     - Chú tên là [gi](cust_name)
     - Chú tên là [ê](cust_name)
@@ -102,6 +108,7 @@ nlu:
     - Chú tên là [đ](cust_name)
     - Chú tên là [d](cust_name)
     - Chú tên là [c](cust_name)
+    - Chú tên là [ch](cust_name)
     - Chú tên là [b](cust_name)
     - Chú tên là [a](cust_name)
     - Chú tên là [â](cust_name)
@@ -275,3 +282,15 @@ nlu:
     - Tôi muốn mua [quần trẻ sơ sinh](item_type)?
     - Tôi muốn mua [áo con nít](item_type)?
     - Tôi muốn mua đồ [dép trẻ em](item_type)?
+
+- intent: ask_discount_program
+  examples: |
+    - Ở đây có chương trình khuyến mãi gì không?
+    - Shop hiện đang có chương trình khuyến mãi gì vậy?
+    - Ở đây có sản phẩm khuyến mãi không?
+
+- intent: ask_delivery_time
+  examples: |
+    - Bao lâu thì tôi nhận được hàng vậy ạ?
+    - Tôi đặt hàng thì bao lâu tôi sẽ nhận được hàng của tôi?
+    - Mất mấy ngày để tôi có thể nhận hàng?

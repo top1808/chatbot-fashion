@@ -94,3 +94,13 @@ stories:
   steps:
   - intent: ask_category
   - action: action_get_categories
+
+- story: story ask discount program
+  steps:
+  - intent: ask_discount_program
+  - action: action_get_discount_programs
+
+- story: story ask delivery time
+  steps:
+  - intent: ask_delivery_time
+  - action: utter_ask_delivery_time

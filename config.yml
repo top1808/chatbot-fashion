@@ -8,7 +8,7 @@ assistant_id: 20240316-221816-asymptotic-image
 
 # Configuration for Rasa NLU.
 # https://rasa.com/docs/rasa/nlu/components/
-language: vi
+language: vi_core_news_lg
 
 pipeline:
 # # No configuration for the NLU pipeline was provided. The following default pipeline was used to train your model.
@@ -16,7 +16,10 @@ pipeline:
 # # See https://rasa.com/docs/rasa/tuning-your-model for more information.
   # - name: custom_tokenizers.vi_tokenizer.VietnameseTokenizer
   #   tokenizer: underthesea
-  - name: WhitespaceTokenizer
+  # - name: WhitespaceTokenizer
+  - name: SpacyNLP
+    model: vi_core_news_lg
+  - name: SpacyTokenizer
   - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer
@@ -27,6 +30,7 @@ pipeline:
   - name: DIETClassifier
     epochs: 100
     constrain_similarities: true
+  - name: DucklingEntityExtractor
   - name: EntitySynonymMapper
   - name: ResponseSelector
     epochs: 100

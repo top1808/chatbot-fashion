@@ -1,3 +1,3 @@
 #!/bin/bash
 echo Running chatbot
-rasa run actions & rasa run --enable-api & python main.py
+rasa run actions & pip install spacy & rasa run --enable-api & pip install flask==2.3.3 & python main.py

@@ -159,6 +159,7 @@ session_config:
   carry_over_slots_to_new_session: true
 
 actions:
+- action_check_item_type
 - action_check_size
 - action_reset_cust_height
 - action_reset_cust_weight

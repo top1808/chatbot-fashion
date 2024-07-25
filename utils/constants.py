@@ -1,0 +1,1 @@
+ITEM_TYPE = ["áo", "ao", "quần", "quan", "giày", "giay", "dép", "dep", "balo", "trang sức", "trang suc", "day chuyen", "dây chuyền", "mũ", "mu", "túi sách", "đồng hồ", "tui sach", "dongho"]

@@ -10,7 +10,7 @@ from rasa_sdk.events import SlotSet
 from rasa_sdk.events import UserUtteranceReverted
 
 from utils.functionHelper import chose_size_from_height, get_all_name_products, get_all_name_categories, chose_shoes_size_from_foot_size, get_products_buy_name, get_all_name_discount_programs
-
+from db_shop_connect import get_products_by_name
 
 class ActionGetProducts(Action):
     def name(self):
@@ -33,7 +33,15 @@ class ActionGetDiscountPrograms(Action):
         return "action_get_discount_programs"
     
     def run(self, dispatcher, tracker, domain):
-        dispatcher.utter_message(text=f"Chúng tôi đang có những chương trình khuyến mãi như {get_all_name_discount_programs()}. Bạn có thể tham khảo những sản phẩm giảm giá của những chương trình khuyến mãi này.")
+        data = get_all_name_discount_programs()
+        names = data["names"]
+        products = data["products"]
+        dispatcher.utter_message(text=f"Chúng tôi đang có những chương trình khuyến mãi như {names}. Bạn có thể tham khảo những sản phẩm giảm giá của những chương trình khuyến mãi này: ")
+        for product in products:
+            dispatcher.utter_message(text=f"{product['name']}")
+            for image in product['images']:
+                dispatcher.utter_message(image=image)
+            dispatcher.utter_message(attachment=f"http://localhost:3000/product/{product['_id']}")
         return []       
 
 class ActionResetCustHeight(Action):
@@ -64,10 +72,15 @@ class ActionGetProductByType(Action):
 
     def run(self, dispatcher, tracker, domain):
         item_type = tracker.get_slot("item_type")
-        products = get_products_buy_name(item_type)
+        products = get_products_by_name(item_type)
         print("item_type: ", item_type)
         if products:
-            dispatcher.utter_message(text=f"Đây là 1 số loại {item_type} thích hợp để bạn chọn: {products}")
+            dispatcher.utter_message(text=f"Đây là 1 số loại {item_type} thích hợp để bạn chọn:")
+            for product in products:
+                dispatcher.utter_message(text=f"{product['name']}")
+                for image in product['images']:
+                    dispatcher.utter_message(image=image)
+                dispatcher.utter_message(attachment=f"http://localhost:3000/product/{product['_id']}")
         else:
             dispatcher.utter_message(text=f"Xin lỗi chúng tôi không có sản phẩm này.")
         return []
@@ -79,17 +92,16 @@ class ActionCheckSize(Action):
     def run(self, dispatcher, tracker, domain):
         cust_height = tracker.get_slot("cust_height")
         cust_weight = tracker.get_slot("cust_weight")
-        item_type = tracker.get_slot("item_type")
-        print("item_type: ", item_type)
         if cust_height:
             get_size = chose_size_from_height(cust_height)
             if get_size:
-                dispatcher.utter_message(text=f"Bạn cao {cust_height} và nặng {cust_weight} thì nên mặc {item_type} size {get_size}.")
-                dispatcher.utter_custom_message({'text': "image", 'class': "image", "url": "https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/450071881_1018050573026378_950725759138483731_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeG-1vT2ahSlG0kF5wSTtXHJ9A5e7cgPL_H0Dl7tyA8v8WOPu74XiL_y0OI49ccmHov0lj-IxXL1FbI_5vOllGGW&_nc_ohc=IiDWflOtuSMQ7kNvgHQuALA&_nc_ht=scontent.fsgn2-8.fna&oh=00_AYAtbcsN1STTRRy1tcPXLphE5RlXUJgKiomS15l3nJdlWw&oe=6693509A"})
+                dispatcher.utter_message(text=f"Bạn cao {cust_height} và nặng {cust_weight} thì nên mặc size {get_size}.")
             else:
                 dispatcher.utter_message(text=f"Xin lỗi chúng tôi không có size này. Vui lòng liên hệ với chúng tôi để đặt riêng.")
+            
         else:
-            dispatcher.utter_message(text=f"Tôi không biết")
+            dispatcher.utter_message(text=f"Xin lỗi tôi không biết chính xác size của bạn.")
+
         return []
     
 class ActionCheckShoesSize(Action):
@@ -97,15 +109,39 @@ class ActionCheckShoesSize(Action):
         return "action_check_shoes_size"
 
     def run(self, dispatcher, tracker, domain):
-        foot_size = tracker.get_slot("foot_size")
-        print("foot_size", foot_size)
-        if foot_size:
-            get_size = chose_shoes_size_from_foot_size(foot_size)
-            dispatcher.utter_message(text=f"Chân bạn dài {foot_size} thì nên đi size {get_size}.")
+        item_type = tracker.get_slot("item_type")
+        print("item_type: ", item_type)
+        products = get_products_by_name(item_type)
+        if products:
+            dispatcher.utter_message(text=f"Đây là 1 số loại {item_type} thích hợp để bạn chọn:")
+            for product in products:
+                dispatcher.utter_message(text=f"{product['name']}")
+                for image in product['images']:
+                    dispatcher.utter_message(image=image)
+                dispatcher.utter_message(attachment=f"http://localhost:3000/product/{product['_id']}")
         else:
-            dispatcher.utter_message(text=f"Tôi không biết")
+            dispatcher.utter_message(text=f"Xin lỗi chúng tôi không có sản phẩm này.")
+       
         return []
-    
+
+class ActionCheckItemType(Action):
+    def name(self):
+        return "action_check_item_type"
+
+    def run(self, dispatcher, tracker, domain):
+        item_type = tracker.get_slot("item_type")
+        products = get_products_by_name(item_type)
+        if products:
+            dispatcher.utter_message(text=f"Đây là 1 số loại {item_type} thích hợp để được chọn:")
+            for product in products:
+                dispatcher.utter_message(text=f"{product['name']}")
+                for image in product['images']:
+                    dispatcher.utter_message(image=image)
+                dispatcher.utter_message(attachment=f"http://localhost:3000/product/{product['_id']}")
+        else:
+            dispatcher.utter_message(text=f"Xin lỗi chúng tôi không có sản phẩm này.")
+        return []
+
 class ValidateSizeForm(FormValidationAction):
     def name(self):
         return "validate_size_form"
@@ -115,10 +151,14 @@ class ValidateSizeForm(FormValidationAction):
     
     def validate_cust_weight(self, slot_value, dispatcher, tracker, domain):
         return {"cust_weight": slot_value}
-    
+
+class ValidateItemTypeForm(FormValidationAction):
+    def name(self):
+        return "validate_item_type_form"
+
     def validate_item_type(self, slot_value, dispatcher, tracker, domain):
         return {"item_type": slot_value}
-    
+
 class ValidateShoesSizeForm(FormValidationAction):
     def name(self):
         return "validate_shoes_size_form"

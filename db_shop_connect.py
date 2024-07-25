@@ -1,5 +1,6 @@
-from bson import json_util
+from bson import ObjectId, json_util
 from pymongo.mongo_client import MongoClient
+from thefuzz import process
 
 CONNECTION_STRING = ("mongodb+srv://top1808:vGSlA80YSUPiFgSr@cluster0.7alxuod.mongodb.net/?retryWrites=true&w"
                      "=majority&appName=Cluster0")
@@ -11,8 +12,19 @@ def get_database():
 
 def get_products_by_name(name = "", limit = 10):
     client = get_database()
-    products = client["products"].find({"name": {"$regex": name, "$options": "i"}}).limit(limit)
-    products_serializable = [json_util.loads(json_util.dumps(product)) for product in products]
+
+    products = client["products"].find()
+    products_names = [product["name"] for product in products]
+    products = process.extract(name, products_names, limit=limit)
+
+    products = [product for product in products if product[1] >= 50]
+    products = [product[0] for product in products[:5]]
+    new_products = []
+    for product in products:
+        new_product = client["products"].find_one({"name": product})
+        new_products.append(new_product)
+
+    products_serializable = [json_util.loads(json_util.dumps(product)) for product in new_products]
 
     for product in products_serializable:
         product['_id'] = str(product['_id'])
@@ -27,6 +39,12 @@ def get_products(limit = 5):
         product['_id'] = str(product['_id'])
     return products_serializable
 
+def get_product_by_id(id):
+    client = get_database()
+    product = client["productdiscounts"].find_one({"_id": ObjectId(id)})
+    product = client["products"].find_one({"_id": ObjectId(product["productCode"])})
+    product['_id'] = str(product['_id'])
+    return product
 def get_categories(limit = 5):
     client = get_database()
     categories = client["categories"].find().limit(limit)

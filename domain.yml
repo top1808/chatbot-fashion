@@ -108,7 +108,7 @@ responses:
     - text: "Dạ không có gì, đó là trách nhiệm của em mà!"
 
   utter_func_list:
-    - text: "Em là 1 con bot dùng để tư vấn và chăm sóc khách hàng về mặt thời trang của shop T&T ạ."
+    - text: "Em là 1 con bot dùng để tư vấn và chăm sóc khách hàng về mặt thời trang của shop T&T ạ. Bạn cần giúp đỡ gì vậy?"
 
   utter_ask_name:
     - text: "Em tên Bot Sóc Xinh. Người ta hay gọi em là Bot thông minh xinh đẹp giỏi giang nhất vũ trụ ạ! Quý khách cần trợ giúp gì ạ?"

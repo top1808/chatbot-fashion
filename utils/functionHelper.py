@@ -3,6 +3,7 @@ from db_shop_connect import get_products, get_categories, get_products_by_name, 
 import re
 import json
 from utils.constants import ITEM_TYPE
+import random
 
 size_data = [
     {
@@ -75,7 +76,9 @@ shoes_size_data = [
     },
 ]
 
-
+NAME_ENTITY = ["Tôi là ", "chị là ", "anh là ", "chú là ", "t là ", "em là ", "ông là ", "bà là "]
+PRODUCT_ENTITY = ["áo", "quần", "giày", "mũ", "tất", "vớ", "dép", "váy", "khăn quàng", "đồng hồ", "kính râm", "bikini", "áo hoodie", "quần jean", "quần kaki", "áo khoác", "áo đá banh", "quần đá banh", "balo", "quần đùi", "áo 3 lỗ", "áo ba lỗ", "cặp"]
+PRODUCT_ENTITY_QUESTION = ["Tôi muốn mua ", "tôi thích mua ", "tôi định mua ", "gợi ý cho tôi ", "Có sản phẩm ", "Giúp tôi chọn ", "Gợi ý cho tôi "]
 def convert_size_to_number(height):
     if height is None: return ""
     parts = height.split('m')
@@ -192,33 +195,34 @@ def json_to_yaml(yaml_file, json_data):
     products = get_products(1000)
     productNames = [product["name"] for product in products]
     productNames = [name.lower() for name in productNames]
-    productWithSizeNames = [name for name in productNames if "áo" in name.lower() or "quần" in name.lower()]
-    productShoesNames = [name for name in productNames if "dép" in name.lower() or "giày" in name.lower()]
-    productWithOutSizeNames = [name for name in productNames if not any(keyword in name.lower() for keyword in ["áo", "quần", "dép", "giày"])]
+    combined_product_names = list(set(productNames + PRODUCT_ENTITY))
+    productWithSizeNames = [name for name in combined_product_names if "áo" in name.lower() or "quần" in name.lower()]
+    productShoesNames = [name for name in combined_product_names if "dép" in name.lower() or "giày" in name.lower()]
+    productWithOutSizeNames = [name for name in combined_product_names if not any(keyword in name.lower() for keyword in ["áo", "quần", "dép", "giày"])]
 
     product_with_size_intent = {
         "_id": "id_product_with_size",
         "intent": "ask_buy_item_with_size",
-        "patterns": [transform_text(name, ITEM_TYPE) for name in productWithSizeNames]
+        "patterns": [f"{random.choice(PRODUCT_ENTITY_QUESTION)}{transform_text(name, ITEM_TYPE)}" for name in productWithSizeNames]
     }
 
     product_with_out_size_intent = {
         "_id": "id_ask_buy_item_without_size",
         "intent": "ask_buy_item_without_size",
-        "patterns": [transform_text(name, ITEM_TYPE) for name in productWithOutSizeNames]
+        "patterns": [f"{random.choice(PRODUCT_ENTITY_QUESTION)}{transform_text(name, ITEM_TYPE)}" for name in productWithOutSizeNames]
     }
 
     product_shoes_intent = {
         "_id": "id_ask_buy_shoes",
         "intent": "ask_buy_shoes",
-        "patterns": [transform_text(name, ITEM_TYPE) for name in productShoesNames]
+        "patterns": [ f"{random.choice(PRODUCT_ENTITY_QUESTION)}{transform_text(name, ITEM_TYPE)}" for name in productShoesNames]
     }
 
     name_data = readFileJson('vietnamese_name/name.json')["name"]
     name_intent = {
         "_id": "id_give_name",
         "intent": "give_name",
-        "patterns": [f"[{name}](cust_name)" for name in name_data]
+        "patterns": [f"{random.choice(NAME_ENTITY)}[{name}](cust_name)" for name in name_data]
     }
 
     json_data = merge_patterns_with_intent(json_data, product_with_size_intent)
